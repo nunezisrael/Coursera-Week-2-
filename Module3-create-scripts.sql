@@ -11,6 +11,16 @@ Zip varchar2(10) not null,
 
 constraint CustNo_PK primary key (CustNo)
 );
+create table Employee(
+EmpNo varchar2(8) not null,
+EmpName varchar2(30) not null.
+Department varchar2(20) not null,
+Email varchar2(50) not null,
+phone varchar2(8),
+
+constraint EmpNo_PK primary key (EmpNo),
+constraint unique_email unique (Email)
+);
  create table facility(
  FacNo varchar2(8) not null,
  FacName varchar2(30) not null,
