@@ -6,7 +6,7 @@ Internal char(1) not null,
 Contract varchar2(35) not null,
 Phone varchar2(11) not null,
 City varchar2(30) not null, 
-'State' varchar2(2) not null,
+"State" varchar2(2) not null,
 Zip varchar2(10) not null,
 
 constraint CustNo_PK primary key (CustNo)
@@ -36,12 +36,12 @@ constraint unique_email unique (Email)
  constraint LocNo_PK primary key (LocNo),
  constraint FacNo_FK foreign key (FacNo) references facility (FacNo)
  );
- create table resourcetbl(
+  create table resourcetbl(
  ResNo varchar2(8) not null,
  ResName varchar2(30) not null,
- Rate number(2,2)
+ Rate number(2,2),
  
- constraint ResNo_PK primary key (ResNo),
+ constraint ResNo_PK primary key (ResNo)
  );
  create table eventrequest(
  EventNo varchar2(8) not null,
@@ -56,8 +56,8 @@ constraint unique_email unique (Email)
  BudNo varchar2(8),
  
  constraint EventNo_PK primary key (EventNo),
- constraint FacNo_FK foreign key references facility (FacNo),
- constraint CustNo_FK foreign key references customer (CustNo)
+ constraint FacNo_FK foreign key (FacNo) references facility (FacNo),
+ constraint CustNo_FK foreign key (CustNo)references customer (CustNo)
  );
  create table eventplan(
  PlanNo varchar2(8) not null,
@@ -68,8 +68,8 @@ constraint unique_email unique (Email)
  EmpNo varchar2(8),
  
  constraint PlanNo_PK primary key (PlanNo),
- constraint EventNo_FK foreign key references eventrequest (EventNo),
- constraint EmpNo_FK foreign key references employee (EmpNo)
+ constraint EventNo_FK foreign key (EventNo) references eventrequest (EventNo),
+ constraint EmpNo_FK foreign key (EmpNo)references employee (EmpNo)
  );
  create table eventplanline(
  PlanNo varchar2(8) not null,
@@ -80,7 +80,7 @@ constraint unique_email unique (Email)
  LocNo varchar2(8) not null,
  ResNo varchar2(8) not null,
  
- constraint PlanNo_FK foreign key references eventplan (PlanNo),
- constraint LocNo_FK foreign key references location (LocNo),
- constraint ResNo_FK foreign key references resourcetbl (ResNo) 
+ constraint PlanNo_FK foreign key (PlanNo) references eventplan (PlanNo),
+ constraint LocNo_FK foreign key (LocNo)references location (LocNo),
+ constraint ResNo_FK foreign key (ResNo)references resourcetbl (ResNo) 
  );
