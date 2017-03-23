@@ -41,7 +41,7 @@ constraint unique_email unique (Email)
  ResName varchar2(30) not null,
  Rate number(2,2)
  
- constraint Resno_PK primary key (ResNo),
+ constraint ResNo_PK primary key (ResNo),
  );
  create table eventrequest(
  EventNo varchar2(8) not null,
@@ -70,4 +70,17 @@ constraint unique_email unique (Email)
  constraint PlanNo_PK primary key (PlanNo),
  constraint EventNo_FK foreign key references eventrequest (EventNo),
  constraint EmpNo_FK foreign key references employee (EmpNo)
+ );
+ create table eventplanline(
+ PlanNo varchar2(8) not null,
+ LineNo char(1) not null,
+ TimeStart date not null,
+ TimeEnd date not null,
+ NumberFld number(1,0) not null,
+ LocNo varchar2(8) not null,
+ ResNo varchar2(8) not null,
+ 
+ constraint PlanNo_FK foreign key references eventplan (PlanNo),
+ constraint LocNo_FK foreign key references location (LocNo),
+ constraint ResNo_FK foreign key references resourcetbl (ResNo) 
  );
