@@ -13,7 +13,7 @@ constraint CustNo_PK primary key (CustNo)
 );
 create table employee(
 EmpNo varchar2(8) not null,
-EmpName varchar2(30) not null.
+EmpName varchar2(30) not null_
 Department varchar2(20) not null,
 Email varchar2(50) not null,
 phone varchar2(8),
@@ -34,14 +34,15 @@ constraint unique_email unique (Email)
  LocName varchar2(30) not null,
  
  constraint LocNo_PK primary key (LocNo),
- constraint FacNo_FK foreign key (FacNo) references facility (FacNo)
+ constraint Location_FacNo_FK foreign key (FacNo) references facility (FacNo)
  );
   create table resourcetbl(
  ResNo varchar2(8) not null,
  ResName varchar2(30) not null,
  Rate number(4,2),
  
- constraint ResNo_PK primary key (ResNo)
+ constraint ResNo_PK primary key (ResNo),
+ constraint RateGreaterThanZero check (Rate > 0)
  );
  create table eventrequest(
  EventNo varchar2(8) not null,
@@ -56,8 +57,10 @@ constraint unique_email unique (Email)
  BudNo varchar2(8),
  
  constraint EventNo_PK primary key (EventNo),
- constraint FacNo_FK_eventrequest foreign key (FacNo) references facility (FacNo),
- constraint CustNo_FK foreign key (CustNo)references customer (CustNo)
+ constraint EventRequest_FacNo_FK foreign key (FacNo) references facility (FacNo),
+ constraint EventRequest_CustNo_FK foreign key (CustNo)references customer (CustNo),
+ constraint StatusValues check (status in ('Pending','Denied','Approved')),
+ constraint EstAudienceGreaterThanZero check (EstAudience > 0)
  );
  create table eventplan(
  PlanNo varchar2(8) not null,
@@ -68,8 +71,8 @@ constraint unique_email unique (Email)
  EmpNo varchar2(8),
  
  constraint PlanNo_PK primary key (PlanNo),
- constraint EventNo_FK foreign key (EventNo) references eventrequest (EventNo),
- constraint EmpNo_FK foreign key (EmpNo)references employee (EmpNo)
+ constraint EventPlan_EventNo_FK foreign key (EventNo) references eventrequest (EventNo),
+ constraint EventPlan_EmpNo_FK foreign key (EmpNo)references employee (EmpNo)
  );
  create table eventplanline(
  PlanNo varchar2(8) not null,
@@ -80,7 +83,9 @@ constraint unique_email unique (Email)
  LocNo varchar2(8) not null,
  ResNo varchar2(8) not null,
  
- constraint PlanNo_FK foreign key (PlanNo) references eventplan (PlanNo),
- constraint LocNo_FK foreign key (LocNo)references location (LocNo),
- constraint ResNo_FK foreign key (ResNo)references resourcetbl (ResNo) 
+ constraint PlanNo_LineNo_PK primary key (PlanNo,LineNo),
+ constraint EventPlanLine_PlanNo_FK foreign key (PlanNo) references eventplan (PlanNo),
+ constraint EventPlanLine_LocNo_FK foreign key (LocNo)references location (LocNo),
+ constraint EventPlanLine_ResNo_FK foreign key (ResNo)references resourcetbl (ResNo),
+ constraint StartTimeGreaterThanEndTime check (TimeStart < TimeEnd) 
  );
