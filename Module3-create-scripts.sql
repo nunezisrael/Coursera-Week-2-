@@ -39,24 +39,24 @@ constraint unique_email unique (Email)
   create table resourcetbl(
  ResNo varchar2(8) not null,
  ResName varchar2(30) not null,
- Rate number(2,2),
+ Rate number(4,2),
  
  constraint ResNo_PK primary key (ResNo)
  );
  create table eventrequest(
  EventNo varchar2(8) not null,
- DatehHeld date not null,
+ DateHeld date not null,
  DateReq date not null,
  FacNo varchar2(8) not null,
  CustNo varchar2(8) not null,
  dateauth date,
  status varchar2(15) not null,
- EstCost number(4,2) not null,
+ EstCost number(5,0) not null,
  EstAudience number(5,0) not null,
  BudNo varchar2(8),
  
  constraint EventNo_PK primary key (EventNo),
- constraint FacNo_FK foreign key (FacNo) references facility (FacNo),
+ constraint FacNo_FK_eventrequest foreign key (FacNo) references facility (FacNo),
  constraint CustNo_FK foreign key (CustNo)references customer (CustNo)
  );
  create table eventplan(
