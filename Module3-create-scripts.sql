@@ -13,7 +13,7 @@ constraint CustNo_PK primary key (CustNo)
 );
 create table employee(
 EmpNo varchar2(8) not null,
-EmpName varchar2(30) not null_
+EmpName varchar2(30) not null,
 Department varchar2(20) not null,
 Email varchar2(50) not null,
 phone varchar2(8),
